@@ -26,8 +26,6 @@ while True:
     _, frame = video.read()
     originalFrame = frame
 
-    gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     key = cv2.waitKey(1) & 0xFF
 
     if key == ord('s'):
@@ -38,7 +36,7 @@ while True:
         else:
             break    
 
-    faces = face_cascade.detectMultiScale(gray_img, scaleFactor = 1.1, minNeighbors = 5)
+    faces = face_cascade.detectMultiScale(frame, scaleFactor = 1.1, minNeighbors = 5)
 
     for x, y, w, h in faces:
         cv2.rectangle(frame, (x,y), (x + w, y + h), (0, 255, 0), 2)
