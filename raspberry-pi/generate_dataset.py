@@ -45,9 +45,9 @@ while True:
     cv2.imshow("Capturing", frame)
 
     if key == ord('q'):
-        printf("Exiting...")
+        print("Exiting...")
         break
 
 video.release()
 cv2.destroyAllWindows()
-printf("Exited successfully.")
+print("Exited successfully.")
