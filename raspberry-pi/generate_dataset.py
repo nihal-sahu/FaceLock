@@ -14,7 +14,7 @@ userName = input()
 
 print("\nPress 'q' to exit, press 's' to save an image to the dataset.\nScript terminates after 20 images.\nMAKE SURE THERE IS A GREEN SQUARE AROUND YOUR FACE BEFORE CAPTURING AN IMAGE.\nCapture begun.")
 
-count = 1 #used to see how many images we have saved
+count = 0 #used to see how many images we have saved
 
 #method to save images
 def saveImage(frame, userName, imgId):
@@ -30,11 +30,11 @@ while True:
 
     if key == ord('s'):
     #save only 20 images
-        if count <= 20:
+        if count < 20:
             cropped = originalFrame[coords[1]:coords[1] + coords[3], coords[0]:coords[0] + coords[2]]
             saveImage(cropped, userName, count)
-            print("{}/20 images saved".format(count))
             count += 1
+            print("{}/20 images saved".format(count))
         else:
             print("Capture completed.")
             break    
