@@ -34,6 +34,7 @@ while True:
             saveImage(originalFrame, userName, count)
             count += 1
         else:
+            print("Capture completed.")
             break    
 
     faces = face_cascade.detectMultiScale(frame, scaleFactor = 1.1, minNeighbors = 5)
@@ -44,7 +45,9 @@ while True:
     cv2.imshow("Capturing", frame)
 
     if key == ord('q'):
+        printf("Exiting...")
         break
 
 video.release()
 cv2.destroyAllWindows()
+printf("Exited successfully.")
