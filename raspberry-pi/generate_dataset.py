@@ -30,7 +30,7 @@ while True:
 
     if key == ord('s'):
     #save only 20 images
-        if count <= 20:
+        if count < 20:
             cropped = originalFrame[coords[1]:coords[1] + coords[3], coords[0]:coords[0] + coords[2]]
             saveImage(cropped, userName, count)
             print("{}/20 images saved".format(count))
