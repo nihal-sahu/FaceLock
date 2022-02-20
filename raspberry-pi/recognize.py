@@ -1,5 +1,11 @@
 import cv2
 import pickle
+import serial
+import time
+
+#UART communications ports
+ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+ser.reset_input_buffer()
 
 video = cv2.VideoCapture(0)
 video.set(3, 320)
@@ -27,8 +33,9 @@ while True:
         face_save = gray_frame[y:y+h, x:x+w]
         
         ID, conf = recognizer.predict(face_save)
-        if conf >= 20 and conf <= 115:
+        if conf >= 20 and conf <= 100:
             cv2.putText(frame, labels[ID], (x-10, y-10), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            ser.write(str.encode("Welcome {}!\n".format(labels[ID])));
         frame = cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 4)
 
     cv2.imshow("Video Feed",frame)
