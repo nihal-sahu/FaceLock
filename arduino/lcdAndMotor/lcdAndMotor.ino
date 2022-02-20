@@ -39,6 +39,8 @@ void loop() {
       lcd.clear();
       lcd.print("Unlocked.\n");
 
+      data = " ";
+      
       lcd.clear();
       lcd.print("Locking in: 30 s");
       delay(30 * 1000);
