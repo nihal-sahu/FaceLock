@@ -32,7 +32,7 @@ while True:
         if id:
             cv2.putText(frame, names[id-1], (x, y-4), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
         else:
-            cv2.putText(frame, 'Intruder', (x, y-4), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
+            cv2.putText(frame, 'Unknown', (x, y-4), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
 
     cv2.imshow("Video Feed", frame)
 
