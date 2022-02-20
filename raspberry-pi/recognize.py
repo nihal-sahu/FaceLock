@@ -1,8 +1,7 @@
 import cv2
-import os
+import pickle
 
 video = cv2.VideoCapture(0)
-#downscale video resolution
 video.set(3, 320)
 video.set(4, 240)
 
@@ -11,35 +10,38 @@ face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("trainer.yml")
 
-names = []
+labels = {} 
+with open("labels.pickle", 'rb') as f:
+    og_label = pickle.load(f)
+    labels = {v:k for k,v in og_label.items()}
 
-#contain all our users into one array
-for users in os.listdir("dataset"):
-    names.append(users)
-
+print("Beginning video feed...")
 
 while True:
-
     _, frame = video.read()
-
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    faces = face_cascade.detectMultiScale(gray_frame, scaleFactor = 1.1, minNeighbors = 5)
+    faces = face_cascade.detectMultiScale(gray_frame, scaleFactor = 1.2, minNeighbors = 5)
 
     for x, y, w, h in faces:
-        cv2.rectangle(frame, (x,y), (x + w, y + h), (0, 255, 0), 2)
-        id, _ = recognizer.predict(gray_frame[y:y+h, x:x+w])
-        if id:
-            cv2.putText(frame, names[id-1], (x, y-4), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
-        else:
-            cv2.putText(frame, 'Unknown', (x, y-4), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
+        face_save = gray_frame[y:y+h, x:x+w]
+        
+        ID, conf = recognizer.predict(face_save)
+        if conf >= 20 and conf <= 115:
+            cv2.putText(frame, labels[ID], (x-10, y-10), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+        frame = cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 4)
 
-    cv2.imshow("Video Feed", frame)
+    cv2.imshow("Video Feed",frame)
+
 
     key = cv2.waitKey(1)
-
-    if key == ord('q'):
+    
+    if(key == ord('q')):
+        print("Exiting...")
         break
+
+
 
 video.release()
 cv2.destroyAllWindows()
+print("Exited.")
