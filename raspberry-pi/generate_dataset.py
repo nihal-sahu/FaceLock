@@ -9,7 +9,7 @@ video = cv2.VideoCapture(0)
 video.set(3, 320)
 video.set(4, 240)
 
-print("Enter the ID and name of the person: ")
+print("Enter the name of the person: ")
 userName = input()
 
 print("\nPress 'q' to exit, press 's' to save an image to the dataset.\nScript terminates after 20 images.\nMAKE SURE THERE IS A GREEN SQUARE AROUND YOUR FACE BEFORE CAPTURING AN IMAGE.\nCapture begun.")
