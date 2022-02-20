@@ -14,6 +14,7 @@ void setup() {
   lcd.init(); // initialize the lcd
   lcd.backlight(); // Turn on backlight
 
+
 }
 
 void loop() {
@@ -37,14 +38,20 @@ void loop() {
 
 void servo_unlock()
 {
+   servo.attach(servoPin);
    for (pos = 0; pos <= 180; pos += 1) { 
     servo.write(pos); 
+    delay(15);
    }
+   servo.detach();
 }
 
 void servo_lock()
 {
+   servo.attach(servoPin);
    for (pos = 180; pos >= 0; pos -= 1) { 
     servo.write(pos); 
- }
+    delay(15);
+   }
+   servo.detach();
 }
