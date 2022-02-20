@@ -6,13 +6,16 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 Servo servo;
 
-int pos = 0;
+int pos = 0;    //position of servo motor
+bool unlocked = false; //tells state of door lock
+int buttonPin = 8;
 
 void setup() {
   // beginning UART communications baud rate 9600
   Serial.begin(9600);
   lcd.init(); // initialize the lcd
   lcd.backlight(); // Turn on backlight
+  pinMode(buttonPin, INPUT_PULLUP);
 
 
 }
@@ -22,14 +25,29 @@ void loop() {
   if (Serial.available() > 0) {
     String data = Serial.readStringUntil('\n');
     lcd.setCursor(0, 0);
-
-    if (data == "Nihal")
+    
+    if (data == "Nihal" && !unlocked)
     {
-      servo_unlock();
+      unlocked = true;
+      lcd.clear();
       lcd.print("Welcome Nihal!");
+      delay(3000);
+      servo_unlock();
+
+      lcd.setCursor(0, 0);
+
+      lcd.clear();
+      lcd.print("Unlocked.\n");
+
+      lcd.clear();
+      lcd.print("Locking in: 30 s");
+      delay(30 * 1000);
+      servo_lock();
+      unlocked = false;
     }
-    else
+    else if (!unlocked)
     {
+      lcd.clear();
       lcd.print("Restricted access.");
     }
     
