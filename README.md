@@ -1,2 +1,2 @@
 # faceLock
-A facial recognition locking system built with STM32, Arduino, Raspberry Pi, and SPI interfacing
+A facial recognition locking system built with Arduino, Raspberry Pi, and UART/SPI communication.
