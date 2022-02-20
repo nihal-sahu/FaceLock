@@ -9,7 +9,8 @@ video = cv2.VideoCapture(0)
 video.set(3, 320)
 video.set(4, 240)
 
-print("Enter the name of the person: ")
+print("Enter the ID and name of the person: ")
+userId = input()
 userName = input()
 
 print("\nPress 'q' to exit, press 's' to save an image to the dataset.\nScript terminates after 20 images.\nMAKE SURE THERE IS A GREEN SQUARE AROUND YOUR FACE BEFORE CAPTURING AN IMAGE.\nCapture begun.")
@@ -17,9 +18,9 @@ print("\nPress 'q' to exit, press 's' to save an image to the dataset.\nScript t
 count = 0 #used to see how many images we have saved
 
 #method to save images
-def saveImage(frame, userName, imgId):
+def saveImage(frame, userName, userId, imgId):
     Path("dataset/{}".format(userName)).mkdir(parents=True, exist_ok = True)       #create folder to save images
-    cv2.imwrite("dataset/{}/{}_{}.jpg".format(userName, userName, imgId), frame)
+    cv2.imwrite("dataset/{}/{}_{}.jpg".format(userName, userId, imgId), frame)
 
 while True:
 
@@ -32,7 +33,7 @@ while True:
     #save only 20 images
         if count < 20:
             cropped = originalFrame[coords[1]:coords[1] + coords[3], coords[0]:coords[0] + coords[2]]
-            saveImage(cropped, userName, count)
+            saveImage(cropped, userName, userId, count)
             count += 1
             print("{}/20 images saved".format(count))
         else:
